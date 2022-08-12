@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wishlist_items",
+  "info": {
+    "singularName": "wishlist-item",
+    "pluralName": "wishlist-items",
+    "displayName": "Wishlist Item",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 300
+    },
+    "done": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "shopUrl": {
+      "type": "string",
+      "required": false,
+      "maxLength": 1000
+    },
+    "assignedTo": {
+      "type": "string",
+      "maxLength": 100
+    }
+  }
+}
