@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
 import { WishlistItem, WishlistItemResult } from './model';
 
 @Component({
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient) {
       const browserLang = translate.getBrowserLang() || 'en';
       translate.use(browserLang);
+      moment.lang(browserLang);
     }
 
   ngOnInit(): void {
@@ -76,5 +78,9 @@ export class AppComponent implements OnInit {
     const payload = { data: item.attributes }
     this.http.put<WishlistItem>(`api/wishlist-items/${item.id}`, payload)
       .subscribe(() => this.getWishlistItems());
+  }
+
+  prettyDate(date: Date): string {
+    return moment(date).fromNow();
   }
 }

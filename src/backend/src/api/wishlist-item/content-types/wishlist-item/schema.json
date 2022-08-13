@@ -33,7 +33,8 @@
     },
     "weight": {
       "type": "integer",
-      "required": true
+      "required": true,
+      "default": 0
     }
   }
 }

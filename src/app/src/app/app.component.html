@@ -56,8 +56,8 @@
                   </div>
                 </div>
               </td>
-              <td class="">
-                <div class="flex items-center pl-5">
+              <td>
+                <div class="pl-5">
                   <p class="text-base font-medium leading-none text-gray-700 mr-2"
                      [ngClass]="{ 'line-through': item.attributes.done }">
                      <a *ngIf="item.attributes.shopUrl; else title_nolink" [href]="item.attributes.shopUrl" target="_blank"
@@ -84,6 +84,13 @@
                     </svg>
                   </button>
                 </a>
+              </td>
+              <td>
+                <div class="pl-5">
+                  <p class="text-base font-thin leading-none text-gray-700 mr-2">
+                     {{ 'Last update' | translate }} {{ prettyDate(item.attributes.updatedAt) }}
+                  </p>
+                </div>
               </td>
             </tr>
           </ng-container>
