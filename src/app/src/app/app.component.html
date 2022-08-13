@@ -3,24 +3,24 @@
     <div class="flex items-center justify-between">
       <p tabindex="0"
         class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
-        🎁 Wishlist</p>
+        🎁 {{ 'Wishlist' | translate }}</p>
     </div>
   </div>
   <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
     <div class="sm:flex items-center justify-between">
-      <div class="flex items-center">
+      <div class="flex items-center cursor-pointer">
         <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800">
           <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
             [ngClass]="{ 'bg-indigo-100': !filterDone }"
             (click)="filterDone = false; getWishlistItems()">
-            <p>All</p>
+            <p>{{ 'All' | translate }}</p>
           </div>
         </a>
         <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8">
           <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full"
             [ngClass]="{ 'bg-indigo-100': filterDone }"
             (click)="filterDone = true; getWishlistItems()">
-            <p>Available</p>
+            <p>{{ 'Available' | translate }}</p>
           </div>
         </a>
       </div>
@@ -89,7 +89,10 @@
           </ng-container>
         </tbody>
       </table>
-      <div *ngIf="wishlistItems != null && wishlistItems.length === 0">No wishes are left! 😍</div>
+      <div *ngIf="wishlistItems != null && wishlistItems.length === 0"
+           class="px-8 py-5 sm:text-lg md:text-xl lg:text-2xl">
+        {{ 'No wishes are left!' | translate }} 😍
+      </div>
     </div>
   </div>
 </div>
@@ -100,12 +103,15 @@
 </style>
 
 <app-modal *ngIf="dialogFirstNameVisible">
-  <h1 class="text-xl mb-4 font-bold text-slate-500">Whats your name? (optional)</h1>
+  <h1 class="text-xl mb-4 font-bold text-slate-500">
+    {{ 'Whats your name?' | translate }}
+    ({{ 'optional' | translate }})
+  </h1>
   <input [(ngModel)]="firstName"
     type="text" class="mb-5 w-full bg-gray-100 rounded p-2 mr-4 border-2 focus:outline-none focus:border-blue-500 focus:border-2">
   <button (click)="closeFirstNameDialog()"
     class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">
-    Continue
+    {{ 'Continue' | translate }}
   </button>
 </app-modal>
 
