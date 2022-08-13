@@ -30,6 +30,10 @@
     "assignedTo": {
       "type": "string",
       "maxLength": 100
+    },
+    "weight": {
+      "type": "integer",
+      "required": true
     }
   }
 }

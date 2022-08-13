@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   selectedItem?: WishlistItem;
   firstName: string = '';
   dialogFirstNameVisible = false;
+  filterDone = false;
 
   constructor(
     private http: HttpClient) {}
@@ -46,7 +47,12 @@ export class AppComponent implements OnInit {
   }
 
   getWishlistItems() {
-    this.http.get<WishlistItemResult>('api/wishlist-items')
+    let url = 'api/wishlist-items'
+      + '?sort[0]=weight%3Adesc&sort[1]=name';
+    if (this.filterDone) {
+      url += '&filters[done][$eq]=false';
+    }
+    this.http.get<WishlistItemResult>(url)
       .subscribe(result => this.wishlistItems = result.data);
   }
 
