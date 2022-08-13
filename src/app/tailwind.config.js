@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'ping-onetime': 'ping 1s linear'
+      }
+    },
   },
   plugins: [],
 }

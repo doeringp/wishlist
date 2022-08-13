@@ -10,9 +10,10 @@ import { WishlistItem, WishlistItemResult } from './model';
 export class AppComponent implements OnInit {
   wishlistItems: WishlistItem[] = [];
   selectedItem?: WishlistItem;
+  filterDone = false;
   firstName: string = '';
   dialogFirstNameVisible = false;
-  filterDone = false;
+  heartVisible = false;
 
   constructor(
     private http: HttpClient) {}
@@ -33,8 +34,12 @@ export class AppComponent implements OnInit {
     }
     this.saveWishlistItem(this.selectedItem);
 
-    if (checked && !this.firstName) {
-      this.dialogFirstNameVisible = true;
+    if (checked) {
+      if (!this.firstName) {
+        this.dialogFirstNameVisible = true;
+      } else {
+        this.showHeart();
+      }
     }
   }
 
@@ -44,6 +49,12 @@ export class AppComponent implements OnInit {
       this.selectedItem.attributes.assignedTo = this.firstName;
       this.saveWishlistItem(this.selectedItem);
     }
+    this.showHeart();
+  }
+
+  showHeart() {
+    this.heartVisible = true;
+    setTimeout(() => this.heartVisible = false, 1000);
   }
 
   getWishlistItems() {
