@@ -48,8 +48,8 @@
                   <div class="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
                     <input placeholder="checkbox" type="checkbox"
                       class="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full"
-                      [checked]="item.attributes.done"
-                      (change)="checkItem(item, $event)" />
+                      [(ngModel)]="item.attributes.done"
+                      (change)="selectItem(item, $event)" />
                     <div class="check-icon hidden bg-indigo-500 text-white rounded-sm">
                       <svg class="icon icon-tabler icon-tabler-check" xmlns="http://www.w3.org/2000/svg" width="20"
                         height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -125,6 +125,12 @@
     class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">
     {{ 'Continue' | translate }}
   </button>
+</app-modal>
+
+<app-modal *ngIf="dialogUncheckVisible">
+  <h1 class="text-xl mb-4 font-bold text-slate-500">{{ 'Are you sure?' | translate }}</h1>
+  <button (click)="uncheckSelectedItemCancel()" class="bg-red-500 px-4 py-2 rounded-md text-md text-white">{{ 'No' | translate }}</button>
+  <button (click)="uncheckSelectedItemConfirm()" class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">{{ 'Yes' | translate }}</button>
 </app-modal>
 
 <div [style.display]="heartVisible ? 'flex' : 'none'"

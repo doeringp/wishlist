@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Wishlist, WishlistAttributes, WishlistItem, WishlistItemResult } from './model';
+import { TitleStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   filterDone = false;
   firstName: string = '';
   dialogFirstNameVisible = false;
+  dialogUncheckVisible = false;
   heartVisible = false;
   browserLang: string = 'en';
 
@@ -32,22 +34,22 @@ export class AppComponent implements OnInit {
     this.getWishlistItems();
   }
 
-  checkItem(item: WishlistItem, event: any) {
+  selectItem(item: WishlistItem, event: any) {
     this.selectedItem = item;
-    let checked: boolean = event.target.checked;
-    this.selectedItem.attributes.done = checked;
-
-    if (checked) {
-      this.selectedItem.attributes.assignedTo = this.firstName || null;
+    if (event.target.checked) {
+      this.checkSelectedItem();
     } else {
-      this.selectedItem.attributes.assignedTo = null;
+      this.uncheckSelectedItem();
     }
-    this.saveWishlistItem(this.selectedItem);
+  }
 
-    if (checked) {
+  checkSelectedItem() {
+    if (this.selectedItem) {
       if (!this.firstName) {
         this.dialogFirstNameVisible = true;
       } else {
+        this.selectedItem.attributes.assignedTo = this.firstName;
+        this.saveWishlistItem(this.selectedItem);
         this.showHeart();
       }
     }
@@ -60,6 +62,25 @@ export class AppComponent implements OnInit {
       this.saveWishlistItem(this.selectedItem);
     }
     this.showHeart();
+  }
+
+  uncheckSelectedItem() {
+    this.dialogUncheckVisible = true;
+  }
+
+  uncheckSelectedItemConfirm() {
+    this.dialogUncheckVisible = false;
+    if (this.selectedItem) {
+      this.selectedItem.attributes.assignedTo = null;
+      this.saveWishlistItem(this.selectedItem);
+    }
+  }
+
+  uncheckSelectedItemCancel() {
+    this.dialogUncheckVisible = false;
+    if (this.selectedItem) {
+      this.selectedItem.attributes.done = true;
+    }
   }
 
   showHeart() {
