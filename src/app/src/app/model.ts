@@ -27,3 +27,20 @@ export interface PageInfo {
   pageCount: number;
   total: number;
 }
+
+export interface Wishlist {
+  data: WishlistData;
+}
+
+export interface WishlistData {
+  id: number;
+  attributes: WishlistAttributes;
+}
+
+export interface WishlistAttributes {
+    title: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+    locale: string;
+}

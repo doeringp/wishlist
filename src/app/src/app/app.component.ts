@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
-import { WishlistItem, WishlistItemResult } from './model';
+import { Wishlist, WishlistAttributes, WishlistItem, WishlistItemResult } from './model';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +10,25 @@ import { WishlistItem, WishlistItemResult } from './model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  wishlist?: WishlistAttributes;
   wishlistItems: WishlistItem[] = [];
   selectedItem?: WishlistItem;
   filterDone = false;
   firstName: string = '';
   dialogFirstNameVisible = false;
   heartVisible = false;
+  browserLang: string = 'en';
 
   constructor(
     translate: TranslateService,
     private http: HttpClient) {
-      const browserLang = translate.getBrowserLang() || 'en';
-      translate.use(browserLang);
-      moment.lang(browserLang);
+      this.browserLang = translate.getBrowserLang() || 'en';
+      translate.use(this.browserLang);
+      moment.lang(this.browserLang);
     }
 
   ngOnInit(): void {
+    this.getWishlist();
     this.getWishlistItems();
   }
 
@@ -62,6 +65,11 @@ export class AppComponent implements OnInit {
   showHeart() {
     this.heartVisible = true;
     setTimeout(() => this.heartVisible = false, 1000);
+  }
+
+  getWishlist() {
+    this.http.get<Wishlist>(`api/wishlist?locale=${this.browserLang}`)
+      .subscribe(result => this.wishlist = result?.data?.attributes);
   }
 
   getWishlistItems() {
