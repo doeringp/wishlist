@@ -57,8 +57,10 @@ export class AppComponent implements OnInit {
 
   closeFirstNameDialog() {
     this.dialogFirstNameVisible = false;
-    if (this.firstName && this.selectedItem) {
-      this.selectedItem.attributes.assignedTo = this.firstName;
+    if (this.selectedItem) {
+      if (this.firstName) {
+        this.selectedItem.attributes.assignedTo = this.firstName;
+      }
       this.saveWishlistItem(this.selectedItem);
     }
     this.showHeart();
