@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { catchError, of } from 'rxjs';
 import * as moment from 'moment';
 import { Wishlist, WishlistAttributes, WishlistItem, WishlistItemResult } from './model';
-import { TitleStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -92,6 +92,12 @@ export class AppComponent implements OnInit {
 
   getWishlist() {
     this.http.get<Wishlist>(`api/wishlist?locale=${this.browserLang}`)
+      .pipe(catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return of(null);
+        }
+        throw error;
+      }))
       .subscribe(result => this.wishlist = result?.data?.attributes);
   }
 
